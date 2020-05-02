@@ -1,0 +1,55 @@
+server:
+  port: 9998
+  servlet:
+    context-path: /
+
+# logback 配置
+logging:
+  file:
+    path: classpath:/logback-spring.xml
+  level:
+    root: debug
+    boot: info
+  path: ./logs
+
+#数据库
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    password: pigoss
+    url: jdbc:mysql://localhost:3306/panel?useUnicode=true&characterEncoding=UTF-8
+    username: root
+  freemarker:
+    cache: false #关闭模板缓存，方便测试
+    settings:
+      template_update_delay: 0 #检查模板更新延迟时间，设置为0表示立即检查，如果时间大于0会有缓存不方便进行模板测试邮箱配置
+  mail:
+    host: smtp.qq.com
+    username: 1141309981@qq.com
+    password: bnlutspstmkbfeec
+    default-encoding: UTF-8
+    nickname: 1141309981@qq.com
+    #其他此参数
+    properties:
+      mail:
+        smtp:
+          #如果用ssl方式，需要配置以下属性
+          auth: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+          starttls:
+            enable: true
+            required: true
+
+mybatis:
+  mapperLocations: classpath*:mapper/**/*.xml
+
+# 分页配置
+pagehelper:
+  helper-dialect: mysql
+  reasonable: true
+  support-methods-arguments: true
+  params:
+    count: countSql
+  page-size-zero: true

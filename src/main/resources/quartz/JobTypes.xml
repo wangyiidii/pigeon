@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<types>
+    <type type="1" desc="联通金币签到" className="cn.yiidii.pigeon.quratz.job.LTSign"/>
+    <type type="2" desc="全民K歌鲜花签到" className="cn.yiidii.pigeon.quratz.job.QuanMinKGe"/>
+</types>

@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yiidii.pigeon.shiro.mapper.RoleMapper">
+
+    <select id="queryAllRole" resultType="cn.yiidii.pigeon.shiro.entity.Role">
+        SELECT id,`name`,`desc` FROM t_role
+    </select>
+
+    <select id="queryRoleByUserName" resultType="cn.yiidii.pigeon.shiro.entity.Role">
+        SELECT r.id, r.name, r.desc FROM t_user u, t_role r, t_user_role ur WHERE u.username = #{username} AND u.id = ur.uid AND r.id = ur.rid;
+    </select>
+
+    <select id="queryRoleByRoleName" resultType="cn.yiidii.pigeon.shiro.entity.Role">
+        SELECT r.id, r.name, r.desc FROM t_role r WHERE r.name = #{roleName}
+    </select>
+
+    <!--<select id="queryRoleById" resultType="cn.yiidii.panel.job.Role">-->
+
+    <!--</select>-->
+
+    <!--<insert id="insert" parameterType="cn.yiidii.panel.job.Role" useGeneratedKeys="true" keyProperty="id">-->
+    <!--<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">-->
+    <!--SELECT LAST_INSERT_ID()-->
+    <!--</selectKey>-->
+    <!--insert into t_role-->
+    <!--<trim prefix="(" suffix=")" suffixOverrides=",">-->
+    <!--<if test="id != null">-->
+    <!--id,-->
+    <!--</if>-->
+    <!--<if test="name != null">-->
+    <!--`name`,-->
+    <!--</if>-->
+    <!--<if test="desc != null">-->
+    <!--`desc`,-->
+    <!--</if>-->
+    <!--</trim>-->
+    <!--<trim prefix="values (" suffix=")" suffixOverrides=",">-->
+    <!--<if test="id != null">-->
+    <!--#{id},-->
+    <!--</if>-->
+    <!--<if test="name != null">-->
+    <!--#{name},-->
+    <!--</if>-->
+    <!--<if test="desc != null">-->
+    <!--#{desc},-->
+    <!--</if>-->
+    <!--</trim>-->
+    <!--</insert>-->
+
+    <update id="update" parameterType="cn.yiidii.pigeon.shiro.entity.Role">
+        update t_role
+        <set>
+            <if test="name != null">
+                `name` = #{name},
+            </if>
+            <if test="desc != null">
+                `desc` = #{desc},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!-- 删除用户 -->
+    <delete id="del">
+		DELETE FROM t_role WHERE id = #{id}
+	</delete>
+
+</mapper>

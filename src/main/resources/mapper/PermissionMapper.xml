@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yiidii.pigeon.shiro.mapper.PermissionMapper">
+
+    <select id="queryPermissionByUsername" resultType="cn.yiidii.pigeon.shiro.entity.Permission">
+        SELECT p.id, p.url,p.method, p.permission, p.name FROM t_user u, t_role r, t_user_role ur, t_permission p, t_role_permission rp
+        WHERE u.username = #{username} AND u.id = ur.uid AND r.id = ur.rid AND r.id = rp.rid AND p.id = rp.pid;
+    </select>
+
+
+    <select id="queryPermissionByRoleName" resultType="cn.yiidii.pigeon.shiro.entity.Permission">
+        SELECT  p.id, p.url, p.method, p.permission, p.name FROM t_role r,t_role_permission rp,t_permission p WHERE r.name = #{roleName} AND r.id = rp.rid AND rp.pid=p.id;
+    </select>
+
+    <select id="queryAllPermission" resultType="cn.yiidii.pigeon.shiro.entity.Permission">
+        SELECT id,url,method,permission,`name` from t_permission
+    </select>
+
+
+</mapper>

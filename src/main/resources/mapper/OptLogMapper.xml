@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yiidii.pigeon.optlog.mapper.OptLogMapper">
+
+    <select id="queryLogWithoutUid" resultType="cn.yiidii.pigeon.optlog.entity.OptLog">
+        SELECT id, uid, subject,ip,location_info locationInfo, `module`, content, create_time createTime FROM opt_log WHERE uid is null order by create_time desc
+    </select>
+
+    <select id="queryLogByUid" resultType="cn.yiidii.pigeon.optlog.entity.OptLog">
+       SELECT id, uid, subject, ip,location_info locationInfo,  `module`, content, create_time createTime FROM opt_log WHERE uid =#{uid} order by create_time desc
+    </select>
+
+
+    <insert id="insert" parameterType="cn.yiidii.pigeon.optlog.entity.OptLog" useGeneratedKeys="true"
+            keyProperty="id">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into opt_log
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="uid != null">
+                uid,
+            </if>
+            <if test="subject != null">
+                subject,
+            </if>
+            <if test="ip != null">
+                ip,
+            </if>
+            <if test="locationInfo != null">
+                location_info,
+            </if>
+            <if test="module != null">
+                `module`,
+            </if>
+            <if test="content != null">
+                content,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="uid != null">
+                #{uid},
+            </if>
+            <if test="subject != null">
+                #{subject},
+            </if>
+            <if test="ip != null">
+                #{ip},
+            </if>
+            <if test="locationInfo != null">
+                #{locationInfo},
+            </if>
+            <if test="module != null">
+                #{module},
+            </if>
+            <if test="content != null">
+                #{content},
+            </if>
+            <if test="createTime != null">
+                #{createTime},
+            </if>
+        </trim>
+    </insert>
+
+</mapper>
