@@ -16,3 +16,14 @@ pigeon, 记录了自己写的小项目，以女票的名纸命名~
 - [x] `Hibernate validator` 参数校验
 - [ ] 限制接口的调用频率
 - [ ] ssh方式探针监控系统基本性能（Netty4）
+
+# 部分截图
+
+**北京公交**
+![北京公交](https://blog-bucket.yiidii.cn/blog/bjbus.png)
+
+**邮件模板**
+![邮件模板](https://blog-bucket.yiidii.cn/blog/serverHealthEmail.jpg)
+
+**操作日志**
+![操作日志](https://blog-bucket.yiidii.cn/blog/optlog.png)
