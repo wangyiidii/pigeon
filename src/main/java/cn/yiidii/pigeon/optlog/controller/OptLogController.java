@@ -27,7 +27,7 @@ public class OptLogController {
     @GetMapping("/optlog")
     @ResponseBody
     @ApiOperation(value = "查询操作日志")
-    public String getOptLog(Integer page, Integer pageSize) {
+    public Object getOptLog(Integer page, Integer pageSize) {
         User user = securityUtil.getCurrUser();
         PageResult<OptLog> optLogs = null;
         if (Objects.isNull(user)) {
@@ -35,7 +35,7 @@ public class OptLogController {
         } else {
             optLogs = (PageResult<OptLog>) optLogService.queryLogByUid(user.getId(), page, pageSize);
         }
-        return PageUtil.parsePageResult(optLogs);
+        return optLogs;
     }
 
 }

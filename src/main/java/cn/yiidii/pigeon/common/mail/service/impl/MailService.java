@@ -1,6 +1,6 @@
-package cn.yiidii.pigeon.common.util.mail.service.impl;
+package cn.yiidii.pigeon.common.mail.service.impl;
 
-import cn.yiidii.pigeon.common.util.mail.service.IMailService;
+import cn.yiidii.pigeon.common.mail.service.IMailService;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import lombok.extern.slf4j.Slf4j;

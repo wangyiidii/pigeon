@@ -52,6 +52,7 @@ public class GlobalExceptionAdvice {
 
     @ExceptionHandler(Exception.class)
     public Result handleEx(Exception ex) {
+        ex.toString();
         return Result.error("500000", ex.getMessage());
     }
 

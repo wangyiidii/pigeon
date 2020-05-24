@@ -1,4 +1,4 @@
-package cn.yiidii.pigeon.common.util;
+package cn.yiidii.pigeon.common.util.server;
 
 import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;

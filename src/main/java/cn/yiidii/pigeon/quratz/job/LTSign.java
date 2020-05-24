@@ -63,7 +63,7 @@ public class LTSign implements Job {
                 log.error("签到失败,cookie过期。");
             }
         } else {
-            log.error("签到失败。[" + result.getCode() + "]: " + result.getContent());
+            log.error("签到失败。状态码: {}. content: {}.", result.getCode(), result.getContent().replaceAll("\n", "").substring(0, 50));
         }
     }
 
@@ -73,7 +73,7 @@ public class LTSign implements Job {
         if (result.getCode() == 200) {
             log.info("当前金币个数：" + result.getContent());
         } else {
-            log.error("查询金币失败。[" + result.getCode() + "]: " + result.getContent());
+            log.error("查询金币失败。状态码: {}. content: {}.", result.getCode(), result.getContent().replaceAll("\n", "").substring(0, 50));
         }
     }
 }

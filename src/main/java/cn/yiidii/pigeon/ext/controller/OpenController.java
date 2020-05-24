@@ -2,10 +2,11 @@ package cn.yiidii.pigeon.ext.controller;
 
 import cn.yiidii.pigeon.annotation.OptLogAnnotation;
 import cn.yiidii.pigeon.base.vo.Result;
-import cn.yiidii.pigeon.common.util.ServerInfo;
-import cn.yiidii.pigeon.common.util.ServerUtil;
-import cn.yiidii.pigeon.common.util.mail.dto.ServerInfoModel;
-import cn.yiidii.pigeon.common.util.mail.service.impl.MailService;
+import cn.yiidii.pigeon.common.mail.dto.ServerInfoModel;
+import cn.yiidii.pigeon.common.mail.service.impl.MailService;
+import cn.yiidii.pigeon.common.util.qrcode.QRCodeUtil;
+import cn.yiidii.pigeon.common.util.server.ServerInfo;
+import cn.yiidii.pigeon.common.util.server.ServerUtil;
 import cn.yiidii.pigeon.ext.mgr.YiYan;
 import com.alibaba.fastjson.JSONObject;
 import io.swagger.annotations.Api;
@@ -15,6 +16,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 
 @RestController
@@ -26,6 +30,10 @@ public class OpenController {
     private ServerUtil serverUtil;
     @Autowired
     private MailService mailService;
+    @Autowired
+    private HttpServletRequest request;
+    @Autowired
+    private HttpServletResponse response;
 
     @GetMapping("/yiyan")
     @ApiOperation(value = "一言接口")
@@ -70,4 +78,10 @@ public class OpenController {
         return Result.success("发送成功");
     }
 
+    @GetMapping("/qrcode")
+    @OptLogAnnotation
+    @ApiOperation(value = "生成二维码", notes = "")
+    public void geneQRCode(String content, String imgPath) throws Exception {
+        QRCodeUtil.encode(content, imgPath, response.getOutputStream(), false);
+    }
 }

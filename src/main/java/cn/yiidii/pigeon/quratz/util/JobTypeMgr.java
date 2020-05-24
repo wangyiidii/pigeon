@@ -1,5 +1,6 @@
 package cn.yiidii.pigeon.quratz.util;
 
+import cn.yiidii.pigeon.quratz.entity.JobParam;
 import cn.yiidii.pigeon.quratz.entity.JobType;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.BeanUtils;
@@ -12,16 +13,16 @@ import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.concurrent.CopyOnWriteArraySet;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 public class JobTypeMgr {
 
-    private static Set<JobType> jobTypes = new CopyOnWriteArraySet<>();
+    private static Map<Integer, JobType> jobTypeMap = new ConcurrentHashMap<>();
 
     static {
         loadJobTypes();
@@ -31,11 +32,11 @@ public class JobTypeMgr {
         System.out.println(JobTypeMgr.getInstance());
     }
 
-    public static Set<JobType> getInstance() {
-        return jobTypes;
+    public static Map<Integer, JobType> getInstance() {
+        return jobTypeMap;
     }
 
-    public static void loadJobTypes() {
+    public synchronized static void loadJobTypes() {
         Document document = null;
         try {
             File file = new File("quartz/JobTypes.xml"); // 从jar同级目录加载
@@ -54,19 +55,46 @@ public class JobTypeMgr {
         Element root = document.getRootElement();
         List<Element> types = root.elements("type");
         types.forEach(type -> {
-            List<Attribute> attrs = type.attributes();
-            Map<String, Object> map = new HashMap<>();
-            attrs.forEach(attr -> {
-                map.put(attr.getName(), attr.getValue().trim());
+            JobType jobType = parseJobTypes(type);
+            //params
+            List<Element> paramEles = type.elements("param");
+            List<JobParam> params = new ArrayList<>();
+            paramEles.forEach(paramEle -> {
+                JobParam param = parseParam(paramEle);
+                params.add(param);
             });
-            JobType jobType = new JobType();
-            try {
-                BeanUtils.populate(jobType, map);
-                jobTypes.add(jobType);
-            } catch (Exception e) {
-                log.error("转换jobType异常: " + e.toString());
-            }
+            jobType.setJobParams(params);
+            jobTypeMap.put(jobType.getType(), jobType);
         });
+    }
+
+    private static JobType parseJobTypes(Element paramEle) {
+        try {
+            JobType jobType = new JobType();
+            BeanUtils.populate(jobType, attr2Map(paramEle));
+            return jobType;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    private static JobParam parseParam(Element paramEle) {
+        try {
+            JobParam param = new JobParam();
+            BeanUtils.populate(param, attr2Map(paramEle));
+            return param;
+        } catch (Exception e) {
+        }
+        return null;
+    }
+
+    private static Map<String, String> attr2Map(Element e) {
+        List<Attribute> attributes = e.attributes();
+        Map<String, String> map = new HashMap<>();
+        attributes.forEach(attribute -> {
+            map.put(attribute.getName(), attribute.getValue());
+        });
+        return map;
     }
 
 }

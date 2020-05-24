@@ -1,13 +1,17 @@
-package cn.yiidii.pigeon.common.util;
+package cn.yiidii.pigeon.common.util.server;
 
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SpringContextUtil implements ApplicationContextAware {
+
     private static ApplicationContext applicationContext; // Spring应用上下文环境
+
+    private static Environment env;
 
     /*
      * 实现了ApplicationContextAware 接口，必须实现该方法；
@@ -28,5 +32,9 @@ public class SpringContextUtil implements ApplicationContextAware {
 
     public static <T> T getBean(Class<T> clazz) throws BeansException {
         return (T) applicationContext.getBean(clazz);
+    }
+
+    public static String getProperty(String key) throws BeansException {
+        return env.getProperty(key);
     }
 }

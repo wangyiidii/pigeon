@@ -7,6 +7,7 @@ import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.*;
 import org.apache.http.client.utils.URIBuilder;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
@@ -117,6 +118,31 @@ public class HttpClientUtil {
      */
     public static HttpClientResult doPost(String url, Map<String, String> params) throws Exception {
         return doPost(url, null, params);
+    }
+
+    public static HttpClientResult doJsonPost(String url, Map<String, String> header, String jsonParam) throws Exception {
+        HttpPost httpPost = new HttpPost(url);
+        CloseableHttpClient httpClient = HttpClients.createDefault();
+        String respContent = null;
+        // 设置请求头
+        packageHeader(header, httpPost);
+
+        StringEntity entity = new StringEntity(jsonParam.toString(), "utf-8");//解决中文乱码问题
+        entity.setContentEncoding("UTF-8");
+        entity.setContentType("application/json");
+        httpPost.setEntity(entity);
+
+
+        CloseableHttpResponse httpResponse = null;
+
+        try {
+            // 执行请求并获得响应结果
+            return getHttpClientResult(httpResponse, httpClient, httpPost);
+        } finally {
+            // 释放资源
+            release(httpResponse, httpClient);
+        }
+
     }
 
     /**

@@ -11,7 +11,7 @@ public class PageUtil {
         //jo.put("pageCount", obj.getPageCount());
         jo.put("rows", obj.getList());
         //jo.put("page", obj.getCurrent());
-        return jo.toJSONString();
+        return jo.toString();
     }
 
 }

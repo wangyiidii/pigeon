@@ -3,6 +3,9 @@ package cn.yiidii.pigeon.common.util.ssh;
 import com.jcraft.jsch.*;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 
 import java.io.*;
 import java.nio.charset.Charset;
@@ -10,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Function;
 
 /**
@@ -19,8 +23,8 @@ import java.util.function.Function;
 @Data
 public class JSchExecutor {
     private String charset = "UTF-8"; // 设置编码格式
-    private String user; // 用户名
-    private String passwd; // 登录密码
+    private String username; // 用户名
+    private String password; // 登录密码
     private String host; // 主机IP
     private int port = 22; //默认端口
 
@@ -37,8 +41,8 @@ public class JSchExecutor {
      * @param host   主机IP
      */
     public JSchExecutor(String user, String passwd, String host) {
-        this.user = user;
-        this.passwd = passwd;
+        this.username = user;
+        this.password = passwd;
         this.host = host;
     }
 
@@ -48,8 +52,8 @@ public class JSchExecutor {
      * @param host   主机IP
      */
     public JSchExecutor(String user, String passwd, String host, int port) {
-        this.user = user;
-        this.passwd = passwd;
+        this.username = user;
+        this.password = passwd;
         this.host = host;
         this.port = port;
     }
@@ -65,8 +69,8 @@ public class JSchExecutor {
         if (Files.exists(Paths.get(this.identity))) {
             jsch.addIdentity(this.identity, this.passphrase);
         }
-        session = jsch.getSession(user, host, port);
-        session.setPassword(passwd);
+        session = jsch.getSession(username, host, port);
+        session.setPassword(password);
         java.util.Properties config = new java.util.Properties();
         config.put("StrictHostKeyChecking", "no");
         session.setConfig(config);
@@ -94,22 +98,23 @@ public class JSchExecutor {
     /**
      * 执行一条命令
      */
-    public int execCmd(String command) throws Exception {
+    public List<String> execCmd(String command) throws Exception {
         int returnCode = -1;
         BufferedReader reader = null;
-        Channel channel = null;
+        ChannelExec channel = null;
 
-        channel = session.openChannel("exec");
-        ((ChannelExec) channel).setCommand(command);
-        channel.setInputStream(null);
-        ((ChannelExec) channel).setErrStream(System.err);
+        channel = (ChannelExec) session.openChannel("exec");
+        channel.setCommand(command);
         InputStream in = channel.getInputStream();
         reader = new BufferedReader(new InputStreamReader(in));//中文乱码貌似这里不能控制，看连接的服务器的
 
         channel.connect();
         String buf;
+        List<String> resultList = new ArrayList<>();
         while ((buf = reader.readLine()) != null) {
-            log.debug(buf);
+            if (StringUtils.isNotBlank(buf)) {
+                resultList.add(buf);
+            }
         }
         reader.close();
         if (channel.isClosed()) {
@@ -117,7 +122,10 @@ public class JSchExecutor {
         }
 
         channel.disconnect();
-        return returnCode;
+        if (0 != returnCode) {
+            resultList.clear();
+        }
+        return resultList;
     }
 
     /**
@@ -143,7 +151,6 @@ public class JSchExecutor {
                         Charset.forName(charset)));
                 String buf = null;
                 while ((buf = reader.readLine()) != null) {
-                    System.out.println(buf);
                 }
             }
         } catch (IOException e) {
@@ -160,11 +167,17 @@ public class JSchExecutor {
         }
     }
 
+
+    public String getHome() throws SftpException {
+        return this.sftp.getHome();
+    }
+
     /**
      * 上传文件
      */
     public void uploadFile(String local, String remote) throws Exception {
-        File file = new File(local);
+        Resource resource = new ClassPathResource(local);
+        File file = resource.getFile();
         if (file.isDirectory()) {
             throw new RuntimeException(local + "  is not a file");
         }
@@ -184,6 +197,23 @@ public class JSchExecutor {
             if (inputStream != null) {
                 inputStream.close();
             }
+        }
+    }
+
+    public void rm(String dir, String[] fileNameArr) throws Exception {
+        try {
+            if (!Objects.isNull(fileNameArr) && fileNameArr.length > 0) {
+                for (String fileName : fileNameArr) {
+                    String filePath = dir + "/" + fileName;
+                    sftp.rm(filePath);
+                }
+            } else {
+                execCmd("rm -rf " + dir + "/*");
+                sftp.rmdir(dir);
+            }
+        } catch (Exception e) {
+            throw e;
+        } finally {
         }
     }
 

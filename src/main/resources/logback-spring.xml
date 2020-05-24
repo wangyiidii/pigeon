@@ -3,8 +3,11 @@
     <springProperty scope="context" name="logging.path" source="logging.path"/>
     <springProperty scope="context" name="logging.level" source="logging.level.boot"/>
 
+
     <property name="log_pattern"
-              value="%red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{200}) - %cyan(%msg%n)"/>
+              value="%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %line %logger{200} - %msg%n"/>
+    <property name="log_pattern_console"
+              value="%red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %line %highlight(%-5level) %boldMagenta(%logger{200}) - %cyan(%msg%n)"/>
 
     <appender name="STDOUT"
               class="ch.qos.logback.core.ConsoleAppender">
@@ -17,7 +20,7 @@
             <level>INFO</level>
         </filter-->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>${log_pattern}</Pattern>
+            <Pattern>${log_pattern_console}</Pattern>
         </encoder>
     </appender>
     <!-- 所有日志 -->
@@ -27,6 +30,9 @@
         <!--filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>${logging.level}</level>
         </filter-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>INFO</level>
+        </filter>
         <file>${logging.path}/allLog.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>${logging.path}/%d{yyyy-MM-dd}/allLog.log.</FileNamePattern>

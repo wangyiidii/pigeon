@@ -1,4 +1,4 @@
-package cn.yiidii.pigeon.common.util;
+package cn.yiidii.pigeon.common.util.server;
 
 /**
  * @author yiidii

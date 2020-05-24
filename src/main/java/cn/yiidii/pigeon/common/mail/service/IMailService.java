@@ -1,4 +1,4 @@
-package cn.yiidii.pigeon.common.util.mail.service;
+package cn.yiidii.pigeon.common.mail.service;
 
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;

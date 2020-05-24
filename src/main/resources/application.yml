@@ -10,7 +10,7 @@ logging:
   level:
     root: debug
     boot: info
-  path: ./logs
+  path: logs
 
 #数据库
 spring:
@@ -41,6 +41,13 @@ spring:
           starttls:
             enable: true
             required: true
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: admin
+    password: admin
+    virtual-host: /
+
 
 mybatis:
   mapperLocations: classpath*:mapper/**/*.xml
@@ -53,3 +60,11 @@ pagehelper:
   params:
     count: countSql
   page-size-zero: true
+
+#influxDB
+influx:
+  username: admin
+  password: admin
+  openurl: http://127.0.0.1:8086
+  database: pigeon
+  retentionPolicy: autogen

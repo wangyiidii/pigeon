@@ -1,4 +1,4 @@
-package cn.yiidii.pigeon.common.util;
+package cn.yiidii.pigeon.common.util.server;
 
 import org.springframework.boot.web.context.WebServerInitializedEvent;
 import org.springframework.context.ApplicationListener;

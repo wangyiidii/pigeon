@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <types>
-    <type type="1" desc="联通金币签到" className="cn.yiidii.pigeon.quratz.job.LTSign"/>
-    <type type="2" desc="全民K歌鲜花签到" className="cn.yiidii.pigeon.quratz.job.QuanMinKGe"/>
+    <type type="1" alias="联通金币签到" desc="联通金币签到(微博客户端双签)" className="cn.yiidii.pigeon.quratz.job.LTSign">
+        <param name="phone" alias="手机号" desc="手机号" required="1"/>
+        <param name="cookie" alias="Cookie" desc="Cookie" required="1"/>
+        <param name="notify.serverChanKey" alias="Server酱Key" desc="server酱key，不填不通知(http://sc.ftqq.com/3.version)"
+               required="0"/>
+        <param name="notify.email" alias="邮件" desc="邮件通知，多个email英文半角逗号‘,’隔开" required="0"/>
+    </type>
+    <type type="2" alias="全民K歌鲜花签到" desc="全民K歌鲜花签到" className="cn.yiidii.pigeon.quratz.job.QuanMinKGe">
+        <param name="openKey" alias="openKey" desc="不知道openkey哪里来的，抓包的时候/log上会有openkey，复制过来就好了" required="1"/>
+        <param name="cookie" alias="Cookie" desc="Cookie" required="1"/>
+        <param name="notify.serverChanKey" alias="Server酱Key" desc="server酱key，不填不通知" required="0"/>
+        <param name="notify.email" alias="邮件" desc="邮件通知，多个email英文半角逗号‘,’隔开" required="0"/>
+    </type>
 </types>

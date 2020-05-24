@@ -1,6 +1,5 @@
-package cn.yiidii.pigeon.common.util.mail.dto;
+package cn.yiidii.pigeon.common.mail.dto;
 
-import cn.yiidii.pigeon.common.util.ServerInfo;
 import lombok.Data;
 
 @Data

@@ -1,7 +1,7 @@
 package cn.yiidii.pigeon.ascept;
 
 import cn.yiidii.pigeon.annotation.OptLogAnnotation;
-import cn.yiidii.pigeon.common.util.IPUtil;
+import cn.yiidii.pigeon.common.util.server.IPUtil;
 import cn.yiidii.pigeon.optlog.entity.OptLog;
 import cn.yiidii.pigeon.optlog.service.impl.OptLogService;
 import cn.yiidii.pigeon.shiro.entity.User;

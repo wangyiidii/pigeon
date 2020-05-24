@@ -1,15 +1,17 @@
 package cn.yiidii.pigeon.shiro.service.impl;
 
+import cn.yiidii.pigeon.base.RabbitConstant;
 import cn.yiidii.pigeon.base.exception.ServiceException;
 import cn.yiidii.pigeon.base.vo.ResultCodeEnum;
-import cn.yiidii.pigeon.common.util.ServerUtil;
-import cn.yiidii.pigeon.common.util.mail.service.impl.MailService;
+import cn.yiidii.pigeon.common.mail.dto.MailBean;
+import cn.yiidii.pigeon.common.util.server.ServerUtil;
 import cn.yiidii.pigeon.shiro.controller.form.UserLoginForm;
 import cn.yiidii.pigeon.shiro.controller.form.UserRegForm;
 import cn.yiidii.pigeon.shiro.entity.User;
 import cn.yiidii.pigeon.shiro.mapper.UserMapper;
 import cn.yiidii.pigeon.shiro.service.IUserService;
 import org.apache.commons.lang3.StringUtils;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,7 +27,8 @@ public class UserService implements IUserService {
     @Autowired
     private ServerUtil serverUtil;
     @Autowired
-    private MailService mailService;
+    private RabbitTemplate rabbitTemplate;
+
 
     @Override
     public List<User> queryAllUser() throws ServiceException {
@@ -64,8 +67,17 @@ public class UserService implements IUserService {
         if (row != 1) {
             throw new ServiceException(ResultCodeEnum.OPT_FAIL.getMsg());
         }
-        mailService.sendSimpleTextMailActual(user.getUsername() + " - 激活邮件", "<a href=\"" + serverUtil.getUrl() + "/activeAccount?username=" + user.getUsername() + "&code=" + user.getEmailCode() + "\">点我激活" + user.getUsername() + "</a>"
-                , new String[]{user.getEmail()}, null, null, null);
+        MailBean mail = new MailBean(user.getUsername() + " - 激活邮件",
+                "<a href=\"" + serverUtil.getUrl() + "/activeAccount?username=" + user.getUsername() + "&code=" + user.getEmailCode() + "\">点我激活" + user.getUsername() + "</a>",
+                new String[]{user.getEmail()},
+                null,
+                null,
+                null,
+                2,
+                null,
+                null
+        );
+        rabbitTemplate.convertAndSend(RabbitConstant.EMAIL_EXCHANGE, RabbitConstant.EMAIL_ROUTING_KEY, mail);
         return row;
     }
 

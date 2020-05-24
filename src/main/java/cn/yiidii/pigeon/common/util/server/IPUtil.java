@@ -1,4 +1,4 @@
-package cn.yiidii.pigeon.common.util;
+package cn.yiidii.pigeon.common.util.server;
 
 import cn.yiidii.pigeon.common.util.http.HttpClientUtil;
 import cn.yiidii.pigeon.common.util.http.dto.HttpClientResult;

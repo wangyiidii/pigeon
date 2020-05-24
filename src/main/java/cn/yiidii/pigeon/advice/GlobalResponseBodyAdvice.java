@@ -1,6 +1,8 @@
 package cn.yiidii.pigeon.advice;
 
 import cn.yiidii.pigeon.base.vo.Result;
+import cn.yiidii.pigeon.common.util.page.PageUtil;
+import cn.yiidii.pigeon.common.util.page.dto.PageResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
@@ -41,6 +43,9 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice {
         //如果返回的数据是ResultObjectModel、Byte类型则不进行封装
         if (obj instanceof Result || obj instanceof Byte) {
             return obj;
+        }
+        if (obj instanceof PageResult) {
+            return PageUtil.parsePageResult(((PageResult) obj));
         }
 
         return getWrapperResponse(request, obj);
