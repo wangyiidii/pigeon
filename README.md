@@ -14,6 +14,7 @@ CMDB模块（JUC）
 - [x] CMDB模块（XML建模，拓展指标需定义资源指标模型并实现采集器接口）
 - [x] 支持的采集方式：`SNMP`、`SSH`、`HTTP`、`JDBC`、`JAVA`
 - [x] 支持的设备：主机设备（Linux，Windows），中间件（Tomcat），增加ing...
+- [x] 探针监控设备基本性能（Netty4）。[Agent4Pigeon](https://github.com/wangyiidii/Agent4Pigeon)
 
 功能相关
 - [x] `Quartz` 任务调度（已实现北京联通双签和全民K歌鲜花签到）
@@ -23,10 +24,11 @@ CMDB模块（JUC）
 - [x] `AOP` 方式记录操作日志和分页查询
 - [x] `swagger` 接口文档
 - [x] `Hibernate validator` 参数校验
+- [x] `kinfe4j` 接口文档
+- [x] `RabbitMQ` 邮件发送 
 
 未实现的
 - [ ] 限制接口的调用频率
-- [ ] 探针监控设备基本性能（Netty4）
 
 待优化的
 - [ ] 采集线程池的优化
@@ -49,3 +51,7 @@ CMDB模块（JUC）
 **操作日志**
 
 ![操作日志](https://blog-bucket.yiidii.cn/blog/optlog.png)
+
+**接口文档**
+
+![接口文档](https://blog-bucket.yiidii.cn/blog/kinfe4j.png)
