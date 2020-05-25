@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defines>
+    <!-- 资源定义格式: 单词首字母大写(如: NetworkDevice)。 -->
+    <!-- 指标定义格式: 资源 + 指标 + 采集方式 + Indicator(建议，可读性高。如: WindowsCPUSNMPIndicator)。 -->
+    <!-- 返回值定义格式: 单词首字母大写(如: MemUtil)。 -->
+
+    <define name="ResRoot" extend="" alias="ResRoot" category="true"/>
+
+    <define name="Host" extend="ResRoot" alias="Host" category="true">
+        <param name="param.ip" alias="IP" required="1"/>
+    </define>
+
+    <define name="NetworkDevice" extend="ResRoot" alias="Network Device" category="true">
+        <param name="param.ip" alias="IP" required="1"/>
+    </define>
+
+    <define name="Generic" extend="ResRoot" alias="Host" category="true">
+    </define>
+
+    <ind name="IndicatorRoot" alias="IndicatorRoot">
+        <param name="private.interval"/>
+        <param name="private.method"/>
+        <param name="private.timeout"/>
+        <param name="private.retryTimes"/>
+    </ind>
+
+</defines>

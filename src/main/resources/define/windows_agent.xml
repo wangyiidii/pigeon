@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defines>
+    <ind name="WindowsMemoryAgentIndicator" alias="Memory" extend="IndicatorRoot" ref="Windows" method="AGENT"
+         collector="cn.yiidii.pigeon.collection.collector.generic.AgentCollector"
+         collScript="WindowsMemoryAgentIndicator.vbs">
+        <metric name="MemUtil" alias="Mems Util" unit="%"/>
+    </ind>
+</defines>

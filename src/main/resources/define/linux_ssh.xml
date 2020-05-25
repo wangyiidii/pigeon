@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defines>
+    <define name="Linux" extend="Host" alias="Linux">
+        <param name="param.method"/>
+        <param name="param.ssh.username" alias="SSH Username" defaultValue="root" type="text" required="1"/>
+        <param name="param.ssh.password" alias="SSH Password" type="password" required="1"/>
+        <param name="param.ssh.port" alias="SSH Port" required="0" defaultValue="22"/>
+    </define>
+
+    <ind name="LinuxCPUSSHIndicator" alias="CPU" extend="IndicatorRoot" ref="Linux" method="SSH"
+         collector="cn.yiidii.pigeon.collection.collector.generic.SSHCollector" collScript="LinuxCPUSSHIndicator.sh">
+        <metric name="CPUUtil" alias="CPU Util" unit="%"/>
+    </ind>
+    <ind name="LinuxMemSSHIndicator" alias="Memory" extend="IndicatorRoot" ref="Linux" method="SSH"
+         collector="cn.yiidii.pigeon.collection.collector.generic.SSHCollector" collScript="LinuxMemSSHIndicator.sh">
+        <metric name="MemUtil" alias="Mem Util" unit="%"/>
+        <metric name="MemTotal" alias="Mem Util" unit="MB"/>
+    </ind>
+
+</defines>

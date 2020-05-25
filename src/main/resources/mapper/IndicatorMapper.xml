@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.yiidii.pigeon.cmdb.mapper.IndicatorMapper">
+
+    <select id="getIndicatorsByResName" resultType="cn.yiidii.pigeon.cmdb.entity.Indicator">
+        SELECT i.id,i.desc,i.name,i.def_name defName,i.state, i.alias,i.interval,i.method,i.timeout,i.retry_times retryTimes,i.create_time createTime,i.update_time updateTime,i.last_collect_time lastCollectTime  FROM indicator i,res r,res_ind ri
+         WHERE r.name=#{name} AND ri.res_name = r.name AND ri.ind_name =i.name  ORDER BY i.create_time;
+    </select>
+
+    <select id="getIndicatorsWillBeCollect" resultType="cn.yiidii.pigeon.cmdb.entity.Indicator">
+        SELECT i.id,i.desc,i.name,i.def_name defName,i.state, i.alias,i.interval,i.method,i.timeout,i.retry_times retryTimes,i.create_time createTime,i.update_time updateTime,i.last_collect_time lastCollectTime FROM indicator i
+         where unix_timestamp(now())-unix_timestamp(IFNULL(i.last_collect_time,date_add(now(),INTERVAL -1 DAY))) > i.interval
+         and state = 0;
+    </select>
+
+    <insert id="addIndicator" parameterType="cn.yiidii.pigeon.cmdb.entity.Indicator" useGeneratedKeys="true"
+            keyProperty="id">
+        <selectKey keyProperty="id" order="AFTER" resultType="java.lang.Integer">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into indicator
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="name != null">
+                name,
+            </if>
+            <if test="alias != null">
+                alias,
+            </if>
+            <if test="interval != null">
+                `interval`,
+            </if>
+            <if test="method != null">
+                method,
+            </if>
+            <if test="timeout != null">
+                timeout,
+            </if>
+            <if test="retryTimes != null">
+                retry_times,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id},
+            </if>
+            <if test="name != null">
+                #{name},
+            </if>
+            <if test="alias != null">
+                #{alias},
+            </if>
+            <if test="interval != null">
+                #{interval},
+            </if>
+            <if test="method != null">
+                #{method},
+            </if>
+            <if test="timeout != null">
+                #{timeout},
+            </if>
+            <if test="retryTimes != null">
+                #{retry_times},
+            </if>
+            <if test="createTime != null">
+                #{create_time},
+            </if>
+            <if test="updateTime != null">
+                #{update_time},
+            </if>
+        </trim>
+    </insert>
+
+    <update id="updateIndicator4Collect" parameterType="cn.yiidii.pigeon.cmdb.entity.Indicator">
+        update indicator
+        <set>
+            <if test="desc != null">
+                `desc` = #{desc},
+            </if>
+            <if test="lastCollectTime != null">
+                last_collect_time = #{lastCollectTime},
+            </if>
+        </set>
+        where name = #{name}
+    </update>
+
+    <delete id="delIndicatorByName">
+        		DELETE FROM indicator WHERE name = #{name}
+    </delete>
+
+</mapper>

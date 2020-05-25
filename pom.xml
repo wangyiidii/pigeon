@@ -40,7 +40,7 @@
         <commons-io.version>2.6</commons-io.version>
         <commons-pool2.version>2.8.0</commons-pool2.version>
         <mybatis-plus-boot-starter.version>3.3.1</mybatis-plus-boot-starter.version>
-        <netty-all.version>4.0.0.Final</netty-all.version>
+        <netty-all.version>4.1.42.Final</netty-all.version>
     </properties>
 
     <dependencies>

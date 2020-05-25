@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defines>
+    <define name="Windows" extend="Host" alias="Windows">
+        <param name="snmp.community" alias="community name" defaultValue="public" type="text" required="1"/>
+        <param name="snmp.port" alias="snmp port" defaultValue="161" type="text"/>
+    </define>
+
+    <ind name="WindowsCPUSNMPIndicator" alias="CPU" extend="IndicatorRoot" ref="Windows" method="SNMP"
+         collector="">
+        <metric name="CPUUtil" alias="CPU Util" unit="%"/>
+    </ind>
+
+    <ind name="WindowsMemorySNMPIndicator" alias="Memory" extend="IndicatorRoot" ref="Windows" method="SNMP"
+         collector="cn.yiidii.pigeon.collection.collector.host.windows.WindowsMemorySNMPIndicator">
+        <metric name="MemUtil" alias="Mems Util" unit="%"/>
+    </ind>
+
+</defines>

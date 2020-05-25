@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defines>
+    <define name="SelfDevice" extend="NetworkDevice" alias="Self Device">
+    </define>
+
+    <ind name="JVMMemoryIndicator" alias="JVM Memory" extend="IndicatorRoot" ref="SelfDevice"
+         collector="cn.yiidii.pigeon.collection.collector.network.self.JVMMemoryIndicator">
+        <metric name="HeapMemoryUsage" alias="Heap Memory Usage" unit="%"/>
+        <metric name="NonHeapMemoryUsage" alias="NonHeap Memory Usage" unit="%"/>
+    </ind>
+
+</defines>

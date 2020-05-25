@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defines>
+    <define name="GenericService" extend="Generic" alias="Generic Service">
+    </define>
+
+    <ind name="UrlIndicator" alias="URL" extend="IndicatorRoot" ref="GenericService"
+         collector="cn.yiidii.pigeon.collection.collector.generic.HTTPCollector">
+        <param name="RequestURL" alias="Request URL" type="text" required="1"/>
+        <param name="RequestMethod" alias="Request Method" type="text" required="1"/>
+        <param name="RequestParams" alias="Request Params" type="text" required="0"/>
+        <metric name="StatusCode" alias="Status Code"/>
+        <metric name="ResponseBody" alias="Response"/>
+    </ind>
+
+</defines>
