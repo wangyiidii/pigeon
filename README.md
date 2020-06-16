@@ -4,7 +4,7 @@ Pigeon
 pigeon, 记录了自己写的小项目，以女票的名纸命名~
 
 # 已完成的功能
-基于 `springboot` + `maven` ，提供接口，前后端分离
+基于 `springboot` ，提供接口，前后端分离
 
 安全相关：
 - [x] `shiro` 权限管理（shiro魔改前后端分离）
