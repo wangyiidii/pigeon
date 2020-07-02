@@ -20,7 +20,7 @@
         <!--        <mybatis-spring-boot-starter.version>2.1.1</mybatis-spring-boot-starter.version>-->
         <shiro-spring.version>1.4.0</shiro-spring.version>
         <java-jwt.version>3.10.2</java-jwt.version>
-        <mysql-connector-java.version>5.1.21</mysql-connector-java.version>
+        <mysql-connector-java.version>8.0.16</mysql-connector-java.version>
         <!--        <hutool-all.version>4.6.1</hutool-all.version>-->
         <commons-lang3.version>3.9</commons-lang3.version>
         <swagger.version>2.7.0</swagger.version>
