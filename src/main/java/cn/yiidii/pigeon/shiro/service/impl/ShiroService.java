@@ -9,10 +9,12 @@ import java.util.Map;
 @Service
 public class ShiroService implements IShiroService {
 
+    @Override
     public Map<String, String> loadFilterChains() {
         Map<String, String> filterChains = new LinkedHashMap<>();
         //filterChains.put("/third/**", "anon");
 //        filterChains.put("/**", "anon");
+        filterChains.put("/test/**", "anon");
         filterChains.put("/common/**", "anon");
         filterChains.put("/optlog", "anon");
         filterChains.put("/login", "anon");
@@ -37,6 +39,7 @@ public class ShiroService implements IShiroService {
         return filterChains;
     }
 
+    @Override
     public void reloadFilterChains() {
     }
 

@@ -1,8 +1,10 @@
 package cn.yiidii.pigeon.base.exception;
 
-import cn.yiidii.pigeon.base.vo.ResultCodeEnum;
 import lombok.NoArgsConstructor;
-
+/**
+ * @author yiidii Wang
+ * @desc This class is used to ...
+ */
 @NoArgsConstructor
 public abstract class BaseException extends RuntimeException {
 

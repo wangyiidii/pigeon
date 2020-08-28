@@ -2,7 +2,6 @@ package cn.yiidii.pigeon.agent.netty.server;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
@@ -14,7 +13,7 @@ public class Server {
     /**
      * 服务端监听的端口地址
      */
-    private static final int portNumber = 7878;
+    private static final int PORT_NUMBER = 7878;
 
     public static void main(String[] args) throws InterruptedException {
         EventLoopGroup bossGroup = new NioEventLoopGroup();
@@ -29,7 +28,7 @@ public class Server {
             b.childHandler(new ServerInitializer());
 
             // 服务器绑定端口监听
-            ChannelFuture f = b.bind(portNumber).sync();
+            ChannelFuture f = b.bind(PORT_NUMBER).sync();
             // 监听服务器关闭监听
             f.channel().closeFuture().sync();
 

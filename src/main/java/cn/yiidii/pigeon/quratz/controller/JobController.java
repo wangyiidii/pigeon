@@ -43,7 +43,7 @@ public class JobController {
     @ApiOperation(value = "获取所有的定时任务", notes = "")
     public Object getJobs() throws Exception {
         User currUser = securityUtil.getCurrUser();
-        List<JobDTO> jobs = quartzService.queryALlJobByUid(currUser.getId());
+        List<JobDTO> jobs = quartzService.queryAllJobByUid(currUser.getId());
         return jobs;
     }
 

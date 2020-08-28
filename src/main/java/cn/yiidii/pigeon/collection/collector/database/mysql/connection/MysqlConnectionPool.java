@@ -27,14 +27,15 @@ public class MysqlConnectionPool extends GenericKeyedObjectPool<MysqlConfig, Con
 
     public static void initPool() {
         MysqlConnectionFactory factory = new MysqlConnectionFactory();
-        GenericKeyedObjectPoolConfig config = new GenericKeyedObjectPoolConfig();
-        config.setMaxIdlePerKey(10);
-        config.setMaxTotalPerKey(100);
-        config.setMaxTotal(500);
-        config.setMinIdlePerKey(10);
-        config.setTestOnBorrow(true);
-        config.setTestOnReturn(true);
+        GenericKeyedObjectPoolConfig poolConfig = new GenericKeyedObjectPoolConfig();
+        poolConfig.setMaxTotalPerKey(100);
+        poolConfig.setMaxIdlePerKey(3);
+        poolConfig.setMinIdlePerKey(1);
+        poolConfig.setMaxWaitMillis(10 * 1000);
+        poolConfig.setTestOnBorrow(false);
+        poolConfig.setTestOnReturn(false);
 
-        pool = new MysqlConnectionPool(factory, config);
+
+        pool = new MysqlConnectionPool(factory, poolConfig);
     }
 }

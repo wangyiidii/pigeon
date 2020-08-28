@@ -88,7 +88,7 @@ public class QuanMinKGe implements Job {
         String[] kvs = cookie.split(";");
         for (int i = 0; i < kvs.length; i++) {
             String[] kv = kvs[i].split("=");
-            if (kv[0].trim().equals("uid")) {
+            if ("uid".equals(kv[0].trim())) {
                 uid = kv[1];
             }
         }

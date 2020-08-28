@@ -21,7 +21,7 @@ public class SecurityUtil {
     public boolean isContainsRole(String username) {
         Set<Role> roleSet = roleService.queryRoleByUserName(username);
         for (Role role : roleSet) {
-            if (role.getName().equals("admin")) {
+            if ("admin".equals(role.getName())) {
                 return true;
             }
         }
@@ -29,7 +29,7 @@ public class SecurityUtil {
     }
 
     public boolean isAdminRole(String roleName) {
-        if (null != roleName && roleName.equals("admin")) {
+        if (null != roleName && "admin".equals(roleName)) {
             return true;
         }
         return false;

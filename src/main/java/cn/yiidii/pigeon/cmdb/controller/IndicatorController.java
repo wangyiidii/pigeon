@@ -29,9 +29,10 @@ public class IndicatorController {
     @Autowired
     private CMDBService cmdbService;
 
-    @GetMapping("/all")
+    @GetMapping("/all/{name}")
     @ApiOperation(value = "获取资源的所有指标")
-    public Object getAllIndicatorOfRes(@Validated @NotNull(message = "资源名不能为空") @RequestParam("name") String name) {
+    public Object getAllIndicatorOfRes(@Validated @NotNull(message = "资源名不能为空") @PathVariable("name") String name) {
+        log.info("name:{}", name);
         List<Indicator> inds = cmdbService.getAllIndicatorsOfRes(name);
         JSONArray ja = new JSONArray();
         inds.forEach(ind -> {

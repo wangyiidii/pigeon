@@ -19,7 +19,6 @@ public class MysqlConnectionFactory implements KeyedPooledObjectFactory<MysqlCon
 
     @Override
     public PooledObject<Connection> makeObject(MysqlConfig mysqlConfig) throws Exception {
-        System.out.println("makeObject: " + mysqlConfig.getHost());
         Connection connection = null;
         try {
             String driver = "com.mysql.jdbc.Driver";
@@ -40,9 +39,10 @@ public class MysqlConnectionFactory implements KeyedPooledObjectFactory<MysqlCon
 
     @Override
     public void destroyObject(MysqlConfig mysqlConfig, PooledObject<Connection> pooledObject) throws Exception {
-        System.out.println("destroyObject: " + mysqlConfig.getHost());
         Connection conn = pooledObject.getObject();
-        if (Objects.isNull(conn)) return;
+        if (Objects.isNull(conn)) {
+            return;
+        }
         if (!conn.isClosed()) {
             conn.close();
         }
@@ -64,7 +64,6 @@ public class MysqlConnectionFactory implements KeyedPooledObjectFactory<MysqlCon
                 isInvalid = true;
             }
         }
-        System.out.println("validateObject: " + mysqlConfig.getHost() + ",isclosed: " + isColsed + ", isInvalid: " + isInvalid + " [" + (System.currentTimeMillis() - mysqlConfig.getStartTime().getTime()) + "]");
         if (!isColsed || isInvalid) {
             try {
                 destroyObject(mysqlConfig, pooledObject);
@@ -77,7 +76,6 @@ public class MysqlConnectionFactory implements KeyedPooledObjectFactory<MysqlCon
 
     @Override
     public void activateObject(MysqlConfig mysqlConfig, PooledObject<Connection> pooledObject) throws Exception {
-        System.out.println("activateObject: " + mysqlConfig.getHost());
 //        Connection conn = pooledObject.getObject();
 //        try {
 //            String driver = "com.mysql.jdbc.Driver";

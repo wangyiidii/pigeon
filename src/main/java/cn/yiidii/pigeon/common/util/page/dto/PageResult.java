@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class PageResult<T> {
-    private Long total = 0l;
+    private Long total = 0L;
     private Integer current = 1;
     private Integer pageCount = 0;
     private List<T> list;

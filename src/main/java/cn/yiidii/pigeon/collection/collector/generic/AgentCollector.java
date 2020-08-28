@@ -15,6 +15,7 @@ import cn.yiidii.pigeon.cmdb.dto.IndicatorValue;
 import cn.yiidii.pigeon.cmdb.entity.Indicator;
 import cn.yiidii.pigeon.cmdb.entity.Res;
 import cn.yiidii.pigeon.cmdb.service.impl.CMDBService;
+import cn.yiidii.pigeon.collection.CollectionConstant;
 import cn.yiidii.pigeon.collection.collector.ICollector;
 import cn.yiidii.pigeon.common.util.GzipUtil;
 import cn.yiidii.pigeon.common.util.server.SpringContextUtil;
@@ -36,7 +37,7 @@ public class AgentCollector implements ICollector {
         Agent agent = AgentPool.getInstance().getAgent(host);
         IndicatorValue iv = new IndicatorValue();
         if (Objects.isNull(agent)) {
-            iv.setFailureResult("Agent未连接");
+            iv.setFailureResult(CollectionConstant.AGENT_DISCONNECTED);
             return iv;
         }
         //下发脚本
@@ -44,19 +45,19 @@ public class AgentCollector implements ICollector {
         AgentRequest request = getAgentRequestById(id, indicator.getTimeout());
         boolean isIssuedSuccess = Objects.isNull(request) || (!Objects.isNull(request) && request.isSuccess());
         if (!isIssuedSuccess) {
-            iv.setFailureResult("下发脚本超时");
+            iv.setFailureResult(CollectionConstant.ISSUED_SCRIPT_TIMEOUT);
             return iv;
         }
 
         //采集
         id = executeCollect(indicator);
         request = getAgentRequestById(id, indicator.getTimeout());
-        log.info("executeCollect request: {}", request);
+        //log.info("executeCollect request: {}", request);
         boolean isCollSuccess = Objects.isNull(request) || (!Objects.isNull(request) && request.isSuccess());
         if (isCollSuccess) {
             return parseIndicatorValue(indicator, request.getOutput());
         } else {
-            iv.setFailureResult("采集失败");
+            iv.setFailureResult(CollectionConstant.COLLECT_FAIL);
             return iv;
         }
     }

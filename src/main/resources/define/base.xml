@@ -14,6 +14,10 @@
         <param name="param.ip" alias="IP" required="1"/>
     </define>
 
+    <define name="DataBase" extend="ResRoot" alias="DataBase" category="true">
+        <param name="param.ip" alias="IP" required="1"/>
+    </define>
+
     <define name="Generic" extend="ResRoot" alias="Host" category="true">
     </define>
 

@@ -77,13 +77,13 @@ public class CronExpParser {
         StringBuffer sBuffer = new StringBuffer();
         if (tmpCorns.length == 6) {
             //解析月
-            if (!tmpCorns[4].equals("*")) {
+            if (!"*".equals(tmpCorns[4])) {
                 sBuffer.append(tmpCorns[4]).append("月");
             } else {
                 sBuffer.append("每月");
             }
             //解析周
-            if (!tmpCorns[5].equals("*") && !tmpCorns[5].equals("?")) {
+            if (!"*".equals(tmpCorns[5]) && !"?".equals(tmpCorns[5])) {
                 char[] tmpArray = tmpCorns[5].toCharArray();
                 for (char tmp : tmpArray) {
                     switch (tmp) {
@@ -119,8 +119,8 @@ public class CronExpParser {
             }
 
             //解析日
-            if (!tmpCorns[3].equals("?")) {
-                if (!tmpCorns[3].equals("*")) {
+            if (!"?".equals(tmpCorns[3])) {
+                if (!"*".equals(tmpCorns[3])) {
                     sBuffer.append(tmpCorns[3]).append("日");
                 } else {
                     sBuffer.append("每日");
@@ -128,21 +128,21 @@ public class CronExpParser {
             }
 
             //解析时
-            if (!tmpCorns[2].equals("*")) {
+            if (!"*".equals(tmpCorns[2])) {
                 sBuffer.append(tmpCorns[2]).append("时");
             } else {
                 sBuffer.append("每时");
             }
 
             //解析分
-            if (!tmpCorns[1].equals("*")) {
+            if (!"*".equals(tmpCorns[1])) {
                 sBuffer.append(tmpCorns[1]).append("分");
             } else {
                 sBuffer.append("每分");
             }
 
             //解析秒
-            if (!tmpCorns[0].equals("*")) {
+            if (!"*".equals(tmpCorns[0])) {
                 sBuffer.append(tmpCorns[0]).append("秒");
             } else {
                 sBuffer.append("每秒");
@@ -151,12 +151,5 @@ public class CronExpParser {
 
         return sBuffer.toString();
 
-    }
-
-    //测试方法
-    public static void main(String[] args) {
-        String CRON_EXPRESSION = "0/5 * * * * ?";
-        System.out.println(CRON_EXPRESSION);
-        System.out.println(CronExpParser.translateToChinese(CRON_EXPRESSION));
     }
 }

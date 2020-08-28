@@ -20,7 +20,7 @@
             <level>INFO</level>
         </filter-->
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <Pattern>${log_pattern_console}</Pattern>
+            <Pattern>${log_pattern}</Pattern>
         </encoder>
     </appender>
     <!-- 所有日志 -->

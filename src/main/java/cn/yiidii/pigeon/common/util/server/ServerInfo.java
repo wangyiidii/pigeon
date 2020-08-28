@@ -17,7 +17,7 @@ public class ServerInfo {
     public static double cpu() throws SigarException {
         Double util = 0.0;
         Sigar sigar = new Sigar();
-        CpuPerc cpuList[] = sigar.getCpuPercList();
+        CpuPerc[] cpuList = sigar.getCpuPercList();
         for (int i = 0; i < cpuList.length; i++) {
             util += cpuList[i].getCombined();
         }

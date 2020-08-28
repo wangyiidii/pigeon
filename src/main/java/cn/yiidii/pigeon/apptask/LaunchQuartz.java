@@ -1,4 +1,4 @@
-package cn.yiidii.pigeon.appTask;
+package cn.yiidii.pigeon.apptask;
 
 import cn.yiidii.pigeon.quratz.entity.JobType;
 import cn.yiidii.pigeon.quratz.service.dto.JobDTO;
@@ -28,8 +28,8 @@ public class LaunchQuartz implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) throws Exception {
         try {
-//            addAllJob();
-//            quartzUtil.resumeAllJob();
+            addAllJob();
+            quartzUtil.resumeAllJob();
         } catch (Exception e) {
             log.info("Quratz task started failed.");
             e.printStackTrace();
@@ -40,7 +40,7 @@ public class LaunchQuartz implements ApplicationRunner {
 
     private void addAllJob() {
 
-        List<JobDTO> jobDTOS = quartzService.queryALlJob();
+        List<JobDTO> jobDTOS = quartzService.queryAllJob();
         jobDTOS.forEach(jobDTO -> {
             try {
                 Integer type = jobDTO.getType();

@@ -53,15 +53,15 @@ public class CODefineLoader {
 
         if (!Objects.isNull(defineFileArr) && defineFileArr.length > 0) {
             for (File defineFile : defineFileArr) {
-                loadCODefine(defineFile);
+                loadCoDefine(defineFile);
             }
         }
         handle();
-        DefineProxy.setCODefineMap(coDefineMap);
+        DefineProxy.setCoDefineMap(coDefineMap);
         DefineProxy.setIndDefineMap(indicatorDefineMap);
     }
 
-    private static void loadCODefine(File f) {
+    private static void loadCoDefine(File f) {
         Document document = null;
         try {
             SAXReader reader = new SAXReader();
@@ -75,14 +75,17 @@ public class CODefineLoader {
         List<Element> defines = root.elements(COConstant.CO_DEFINE);
         defines.forEach(define -> {
             CODefine coDefine = parseResDefine(define);
-            if (!Objects.isNull(coDefine))
+            if (!Objects.isNull(coDefine)) {
                 coDefineMap.put(coDefine.getName(), coDefine);
+            }
         });
         //ind
         List<Element> inds = root.elements(COConstant.CO_IND);
         inds.forEach(ind -> {
             IndicatorDefine indicatorDefine = parseIndicator(ind);
-            if (!Objects.isNull(indicatorDefine)) ;
+            if (!Objects.isNull(indicatorDefine)) {
+                ;
+            }
 
         });
     }
@@ -178,7 +181,6 @@ public class CODefineLoader {
             if (StringUtils.isNotBlank(extend) && indicatorDefineMapTemp.containsKey(extend)) {
                 indicatorDefine.getParams().putAll(indicatorDefineMapTemp.get(extend).getParams());
             }
-            System.out.println(coDefineMap == null);
 
             if (StringUtils.isNotBlank(ref) && coDefineMap.containsKey(ref)) {
                 coDefineMap.get(ref).addIndicator(indicatorDefine);

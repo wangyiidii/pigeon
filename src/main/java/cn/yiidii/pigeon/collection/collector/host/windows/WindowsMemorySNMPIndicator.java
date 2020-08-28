@@ -43,13 +43,13 @@ public class WindowsMemorySNMPIndicator extends GenericSnmpCollector {
                         if (vb.length == oids.length) {
                             String type = vb[0].getVariable().toString();
                             long unit = vb[1].getVariable().toLong();
-                            if (type.equals("1.3.6.1.2.1.25.2.1.2")) {
+                            if ("1.3.6.1.2.1.25.2.1.2".equals(type)) {
                                 total = vb[2].getVariable().toLong() * unit / 1024
                                         / 1024;
                                 used = vb[3].getVariable().toLong() * unit / 1024
                                         / 1024;
                                 succ = true;
-                            } else if (type.equals("1.3.6.1.2.1.25.2.1.1")) {
+                            } else if ("1.3.6.1.2.1.25.2.1.1".equals(type)) {
                                 if (vb[3] != null) {
                                     buffAndCache += vb[3].getVariable().toLong()
                                             * unit / 1024 / 1024;

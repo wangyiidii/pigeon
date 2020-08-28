@@ -117,8 +117,8 @@ public class RuntimeTest {
 
     private static void cpu() throws SigarException {
         Sigar sigar = new Sigar();
-        CpuInfo infos[] = sigar.getCpuInfoList();
-        CpuPerc cpuList[] = null;
+        CpuInfo[] infos = sigar.getCpuInfoList();
+        CpuPerc[] cpuList = null;
         cpuList = sigar.getCpuPercList();
         for (int i = 0; i < infos.length; i++) {// 不管是单块CPU还是多CPU都适用
             CpuInfo info = infos[i];
@@ -165,23 +165,23 @@ public class RuntimeTest {
 
     private static void who() throws SigarException {
         Sigar sigar = new Sigar();
-        Who who[] = sigar.getWhoList();
+        Who[] who = sigar.getWhoList();
         if (who != null && who.length > 0) {
             for (int i = 0; i < who.length; i++) {
                 // System.out.println("当前系统进程表中的用户名" + String.valueOf(i));
-                Who _who = who[i];
-                System.out.println("用户控制台:    " + _who.getDevice());
-                System.out.println("用户host:    " + _who.getHost());
+                Who w = who[i];
+                System.out.println("用户控制台:    " + w.getDevice());
+                System.out.println("用户host:    " + w.getHost());
                 // System.out.println("getTime():    " + _who.getTime());
                 // 当前系统进程表中的用户名
-                System.out.println("当前系统进程表中的用户名:    " + _who.getUser());
+                System.out.println("当前系统进程表中的用户名:    " + w.getUser());
             }
         }
     }
 
     private static void file() throws Exception {
         Sigar sigar = new Sigar();
-        FileSystem fslist[] = sigar.getFileSystemList();
+        FileSystem[] fslist = sigar.getFileSystemList();
         for (int i = 0; i < fslist.length; i++) {
             System.out.println("分区的盘符名称" + i);
             FileSystem fs = fslist[i];
@@ -224,6 +224,8 @@ public class RuntimeTest {
                     break;
                 case 6:// TYPE_SWAP ：页面交换
                     break;
+                default:
+                    break;
             }
             System.out.println(fs.getDevName() + "读出：    " + usage.getDiskReads());
             System.out.println(fs.getDevName() + "写入：    " + usage.getDiskWrites());
@@ -233,7 +235,7 @@ public class RuntimeTest {
 
     private static void net() throws Exception {
         Sigar sigar = new Sigar();
-        String ifNames[] = sigar.getNetInterfaceList();
+        String[] ifNames = sigar.getNetInterfaceList();
         for (int i = 0; i < ifNames.length; i++) {
             String name = ifNames[i];
             NetInterfaceConfig ifconfig = sigar.getNetInterfaceConfig(name);

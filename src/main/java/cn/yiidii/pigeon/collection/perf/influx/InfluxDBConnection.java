@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 @NoArgsConstructor
 @Component
 public class InfluxDBConnection {
-    private static final Object obj = new Object();
+    private static final Object OBJECT = new Object();
     // 用户名
     @Value("${influx.username}")
     private String username;
@@ -39,7 +39,7 @@ public class InfluxDBConnection {
     @Value("${influx.retentionPolicy}")
     private String retentionPolicy;
 
-    private InfluxDB influxDB;
+    private InfluxDB influxdb;
 
     public InfluxDBConnection(String username, String password, String openurl,
                               String database, String retentionPolicy) {
@@ -57,13 +57,13 @@ public class InfluxDBConnection {
      * @return
      */
     public InfluxDB influxDbBuild() {
-        if (influxDB == null) {
-            synchronized (obj) {
-                influxDB = InfluxDBFactory.connect(openurl, username, password);
+        if (influxdb == null) {
+            synchronized (OBJECT) {
+                influxdb = InfluxDBFactory.connect(openurl, username, password);
             }
         } else if (!ping()) {
-            synchronized (obj) {
-                influxDB = InfluxDBFactory.connect(openurl, username, password);
+            synchronized (OBJECT) {
+                influxdb = InfluxDBFactory.connect(openurl, username, password);
             }
         }
 //        if (!isDBExist(database)) {
@@ -71,8 +71,8 @@ public class InfluxDBConnection {
 //            System.out.println("influxDB [" + database
 //                    + "]is not exist and creating...");
 //        }
-        influxDB.setLogLevel(InfluxDB.LogLevel.NONE);
-        return influxDB;
+        influxdb.setLogLevel(InfluxDB.LogLevel.NONE);
+        return influxdb;
     }
 
     /**
@@ -141,7 +141,7 @@ public class InfluxDBConnection {
         if (0 != time) {
             builder.time(time, timeUnit);
         }
-        influxDB.write(database, retentionPolicy, builder.build());
+        influxdb.write(database, retentionPolicy, builder.build());
     }
 
     /**
@@ -150,7 +150,7 @@ public class InfluxDBConnection {
      * @param batchPoints
      */
     public void batchInsert(BatchPoints batchPoints) {
-        influxDB.write(batchPoints);
+        influxdb.write(batchPoints);
         // influxDB.enableGzip();
         // influxDB.enableBatch(2000,100,TimeUnit.MILLISECONDS);
         // influxDB.disableGzip();
@@ -168,7 +168,7 @@ public class InfluxDBConnection {
     public void batchInsert(final String database,
                             final String retentionPolicy, final ConsistencyLevel consistency,
                             final List<String> records) {
-        influxDB.write(database, retentionPolicy, consistency, records);
+        influxdb.write(database, retentionPolicy, consistency, records);
     }
 
     /**
@@ -178,7 +178,7 @@ public class InfluxDBConnection {
      * @return
      */
     public QueryResult query(String command) {
-        return influxDB.query(new Query(command, database));
+        return influxdb.query(new Query(command, database));
     }
 
     /**
@@ -188,7 +188,7 @@ public class InfluxDBConnection {
      * @return 返回错误信息
      */
     public String deleteMeasurementData(String command) {
-        QueryResult result = influxDB.query(new Query(command, database));
+        QueryResult result = influxdb.query(new Query(command, database));
         return result.getError();
     }
 
@@ -223,7 +223,7 @@ public class InfluxDBConnection {
     }
 
     public String getVersion() {
-        return influxDB.version();
+        return influxdb.version();
     }
 
     /**
@@ -274,8 +274,8 @@ public class InfluxDBConnection {
      *
      * @param dbName
      */
-    public void createDB(String dbName) {
-        influxDB.createDatabase(dbName);
+    public void createDb(String dbName) {
+        influxdb.createDatabase(dbName);
     }
 
     /**
@@ -283,8 +283,8 @@ public class InfluxDBConnection {
      *
      * @param dbName
      */
-    public void deleteDB(String dbName) {
-        influxDB.deleteDatabase(dbName);
+    public void deleteDb(String dbName) {
+        influxdb.deleteDatabase(dbName);
     }
 
     /**
@@ -296,7 +296,7 @@ public class InfluxDBConnection {
         boolean isConnected = false;
         Pong pong;
         try {
-            pong = influxDB.ping();
+            pong = influxdb.ping();
             if (pong != null) {
                 isConnected = true;
             }
@@ -309,79 +309,30 @@ public class InfluxDBConnection {
     /**
      * 数据库是否存在
      */
-    public boolean isDBExist(String db) {
+    public boolean isDbExist(String db) {
         List<List<Object>> dbs = this.query("show databases")
                 .getResults()
                 .get(0)
                 .getSeries()
                 .get(0)
                 .getValues();
-        boolean isDBExist = false;
+        boolean isDbExist = false;
         for (List<Object> list : dbs) {
             for (Object object : list) {
                 if (StringUtils.equals(String.valueOf(object), db)) {
-                    isDBExist = true;
+                    isDbExist = true;
                     break;
                 }
             }
         }
-        return isDBExist;
+        return isDbExist;
     }
 
     /**
      * 关闭数据库
      */
     public void close() {
-        influxDB.close();
+        influxdb.close();
     }
 
-    public static void main(String[] args) {
-
-        InfluxDBConnection influxDBConnection = new InfluxDBConnection("admin",
-                "admin",
-                "http://127.0.0.1:8086",
-                "dbtest",
-                null);
-        // for (int i = 0; i < 1000; i++) {
-        // influxDBConnection.deleteMeasurementData("drop measurement indicator"
-        // + i);
-        // }
-        // BatchPoints batch = BatchPoints.database("dbtest")
-        // .retentionPolicy("autogen")
-        // .build();
-        // for (int i = 0; i < 10; i++) {
-        // Point point = Point.measurement("DiskSnmpIndicator61746")
-        // .time(System.currentTimeMillis(), TimeUnit.MILLISECONDS)
-        // .addField("num", i)
-        // .tag("pkg", "pkg_" + i)
-        // .tag("statusCode", "statusCode_" + i)
-        // .build();
-        // batch.point(point);
-        // }
-        //
-        // influxDBConnection.batchInsert(batch);
-        // influxDBConnection.insert("DiskSnmpIndicator61746",
-        // null,
-        // map,
-        // new Date().getTime(),
-        // TimeUnit.MILLISECONDS);
-        QueryResult results = influxDBConnection.query("SELECT * FROM DiskSnmpIndicator61746 order by time desc limit 1000;SELECT max(value) FROM DiskSnmpIndicator61746;SELECT min(value) FROM DiskSnmpIndicator61746;");
-        // results.getResults()是同时查询多条SQL语句的返回值。
-        for (int i = 0; i < results.getResults().size(); i++) {
-            Result oneResult = results.getResults().get(i);
-            for (Series s : oneResult.getSeries()) {
-                List<String> colunms = s.getColumns();
-                for (int j = 0; j < colunms.size(); j++) {
-                    for (List<Object> list : s.getValues()) {
-                        int k = 0;
-                        for (Object object : list) {
-                            System.out.println(colunms.get(k) + "\t\t"
-                                    + object.toString());
-                            k++;
-                        }
-                    }
-                }
-            }
-        }
-    }
 }

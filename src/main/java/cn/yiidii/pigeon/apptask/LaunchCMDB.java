@@ -1,4 +1,4 @@
-package cn.yiidii.pigeon.appTask;
+package cn.yiidii.pigeon.apptask;
 
 import cn.yiidii.pigeon.agent.netty.server.Server;
 import cn.yiidii.pigeon.cmdb.codefine.CODefineLoader;
@@ -21,12 +21,6 @@ public class LaunchCMDB implements ApplicationRunner {
         long timeTake = System.currentTimeMillis() - start;
         log.info("CMDB model init success.Take {} ms", timeTake);
 
-        //collection
-        start = System.currentTimeMillis();
-        CollectionExecutor.startTimerCollect();
-        CollectionExecutor.startAnalyzeFutures();
-        timeTake = System.currentTimeMillis() - start;
-        log.info("collection service start success.Take {} ms", timeTake);
 
         //agent
         start = System.currentTimeMillis();
