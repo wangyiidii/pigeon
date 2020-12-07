@@ -44,7 +44,7 @@ public class SnmpUtil {
         return readResponse(snmp.send(pdu, target));
     }
 
-    public List<TableEvent> snmpTableGet(String oids[]) throws IOException {
+    public List<TableEvent> snmpTableGet(String[] oids) throws IOException {
         OID[] oidArr = new OID[oids.length];
         for (int i = 0; i < oids.length; i++) {
             oidArr[i] = new OID(oids[i]);
@@ -71,8 +71,8 @@ public class SnmpUtil {
             transport.listen();
 
             PDU pdu = new PDU();
-            OID targetOID = new OID(oid);
-            pdu.add(new VariableBinding(targetOID));
+            OID targetOid = new OID(oid);
+            pdu.add(new VariableBinding(targetOid));
 
             boolean finished = false;
             while (!finished) {
@@ -86,7 +86,7 @@ public class SnmpUtil {
                     vb = response.get(0);
                 }
                 // check finish
-                finished = checkWalkFinished(targetOID, pdu, vb);
+                finished = checkWalkFinished(targetOid, pdu, vb);
                 if (!finished) {
                     result.add(vb.toString());
                     pdu.setRequestID(new Integer32(0));

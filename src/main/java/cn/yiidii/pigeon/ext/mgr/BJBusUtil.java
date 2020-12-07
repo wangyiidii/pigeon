@@ -51,23 +51,23 @@ public class BJBusUtil {
         JSONObject jo = JSONObject.parseObject(result.getContent());
         Document doc = Jsoup.parse(StringEscapeUtils.unescapeHtml4(jo.getString("html")));
         doc.getElementsByClass("inquiry_footer").remove();
-        JSONObject joRT = new JSONObject();
+        JSONObject realTimeJo = new JSONObject();
         String busInfo = doc.getElementsByClass("left fixed").get(0).getElementsByTag("h3").get(0).text();
         String rowInfo = doc.getElementsByClass("inner").get(0).getElementsByTag("h2").get(0).text();
-        List<Element> articlePTags = doc.getElementsByTag("article").get(0).getElementsByTag("p");
-        String stationInfo = articlePTags.get(0).text();
-        String realtimeBusInfo = articlePTags.get(1).text();
+        List<Element> pTags = doc.getElementsByTag("article").get(0).getElementsByTag("p");
+        String stationInfo = pTags.get(0).text();
+        String realtimeBusInfo = pTags.get(1).text();
         if (StringUtils.contains(realtimeBusInfo, "预计")) {
             stationInfo += "<br/><span class='text-success'>" + realtimeBusInfo + "</span>";
         } else {
             stationInfo += "<br/><span class='grey-text'>" + realtimeBusInfo + "</span>";
         }
         doc.getElementsByClass("inquiry_header").remove();
-        joRT.put("busInfo", busInfo);
-        joRT.put("rowInfo", rowInfo);
-        joRT.put("stationInfo", stationInfo);
-        joRT.put("html", doc.getElementsByTag("body").toString().replaceAll("\\.\\.\\.", ""));
-        return joRT;
+        realTimeJo.put("busInfo", busInfo);
+        realTimeJo.put("rowInfo", rowInfo);
+        realTimeJo.put("stationInfo", stationInfo);
+        realTimeJo.put("html", doc.getElementsByTag("body").toString().replaceAll("\\.\\.\\.", ""));
+        return realTimeJo;
     }
 
     /**

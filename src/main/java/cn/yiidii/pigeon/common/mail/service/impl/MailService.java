@@ -142,12 +142,16 @@ public class MailService implements IMailService {
             mimeMessageHelper.setTo(toWho);
             //设置非必要的邮件元素，在使用helper进行封装时，这些数据都不能够为空
             if (ccPeoples != null)
-                //设置邮件的抄送人：MimeMessageHelper # Assert.notNull(cc, "Cc address array must not be null");
+            //设置邮件的抄送人：MimeMessageHelper # Assert.notNull(cc, "Cc address array must not be null");
+            {
                 mimeMessageHelper.setCc(ccPeoples);
+            }
 
             if (bccPeoples != null)
-                //设置邮件的密送人：MimeMessageHelper # Assert.notNull(bcc, "Bcc address array must not be null");
+            //设置邮件的密送人：MimeMessageHelper # Assert.notNull(bcc, "Bcc address array must not be null");
+            {
                 mimeMessageHelper.setBcc(bccPeoples);
+            }
             return true;
         } catch (MessagingException e) {
             e.printStackTrace();

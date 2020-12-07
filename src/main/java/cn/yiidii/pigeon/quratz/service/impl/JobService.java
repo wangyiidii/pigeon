@@ -49,29 +49,29 @@ public class JobService implements IJobService {
     }
 
     @Override
-    public List<JobDTO> queryALlJobByUid(Integer uid) {
+    public List<JobDTO> queryAllJobByUid(Integer uid) {
         List<Job> jobs = jobMapper.selectList(new QueryWrapper<Job>().eq("uid", uid));
-        List<JobDTO> jobDTOs = new ArrayList<>();
+        List<JobDTO> jobDtos = new ArrayList<>();
         jobs.forEach(job -> {
             JobDTO jobDTO = new JobDTO();
             BeanUtils.copyProperties(job, jobDTO);
             assignParam4JobDTO(job, jobDTO);
-            jobDTOs.add(jobDTO);
+            jobDtos.add(jobDTO);
         });
-        return jobDTOs;
+        return jobDtos;
     }
 
     @Override
-    public List<JobDTO> queryALlJob() {
+    public List<JobDTO> queryAllJob() {
         List<Job> jobs = jobMapper.selectList(null);
-        List<JobDTO> jobDTOs = new ArrayList<>();
+        List<JobDTO> jobDtos = new ArrayList<>();
         jobs.forEach(job -> {
             JobDTO jobDTO = new JobDTO();
             BeanUtils.copyProperties(job, jobDTO);
             assignParam4JobDTO(job, jobDTO);
-            jobDTOs.add(jobDTO);
+            jobDtos.add(jobDTO);
         });
-        return jobDTOs;
+        return jobDtos;
     }
 
     @Override

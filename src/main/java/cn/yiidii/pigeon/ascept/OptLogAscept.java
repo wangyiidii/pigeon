@@ -60,7 +60,7 @@ public class OptLogAscept {
         }
         String ip = IPUtil.getIpAddr(request);
         optLog.setIp(ip);
-        optLog.setLocationInfo(IPUtil.getLocationByIP(ip));
+        optLog.setLocationInfo(IPUtil.getLocationByIp(ip));
         optLog.setModule(module);
         optLog.setContent(content);
         optLog.setCreateTime(new Date());

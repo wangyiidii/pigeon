@@ -53,7 +53,7 @@ public class AuthController {
             jo.put("token", token);
             return jo;
         } else {
-            throw new AuthenticationException();
+            throw new AuthenticationException("用户名或密码错误");
         }
     }
 

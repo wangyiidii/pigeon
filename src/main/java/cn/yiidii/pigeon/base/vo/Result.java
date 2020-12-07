@@ -2,6 +2,10 @@ package cn.yiidii.pigeon.base.vo;
 
 import lombok.Data;
 
+/**
+ * @author yiidii Wang
+ * @desc This class is used to ...
+ */
 @Data
 public class Result<T> {
 

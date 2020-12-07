@@ -3,13 +3,16 @@
 <mapper namespace="cn.yiidii.pigeon.cmdb.mapper.ResMapper">
 
     <select id="getAllRes" resultType="cn.yiidii.pigeon.cmdb.entity.Res">
-        SELECT id,name,alias,host,def_name defName,status,create_time  createTime,update_time updateTime FROM res order by create_time;
+        SELECT id,name,alias,host,def_name defName,status,create_time createTime,update_time updateTime FROM res order
+        by create_time;
     </select>
     <select id="getResByName" resultType="cn.yiidii.pigeon.cmdb.entity.Res">
-        SELECT id,name,alias,host,def_name defName,status,create_time createTime,update_time updateTime FROM res where name = #{name} order by create_time;
+        SELECT id,name,alias,host,def_name defName,status,create_time createTime,update_time updateTime FROM res where
+        name = #{name} order by create_time;
     </select>
     <select id="getResByIndicatorName" resultType="cn.yiidii.pigeon.cmdb.entity.Res">
-         SELECT id,name,alias,host,def_name defName,status,create_time createTime,update_time updateTime FROM res where name = (select res_name from  res_ind where ind_name = #{name})
+        SELECT id,name,alias,host,def_name defName,status,create_time createTime,update_time updateTime FROM res where
+        name = (select res_name from res_ind where ind_name = #{name})
     </select>
     <select id="getParamByRes" resultType="cn.yiidii.pigeon.cmdb.entity.Param">
         SELECT id,`name`,`key`,`value` FROM param where `name` = #{name};
@@ -107,11 +110,11 @@
     <!--    </update>-->
 
     <delete id="delResByName">
-    		DELETE FROM res WHERE name = #{name}
-    	</delete>
+        DELETE FROM res WHERE name = #{name}
+    </delete>
 
     <delete id="delResById">
-    		DELETE FROM res WHERE id = #{id}
-    	</delete>
+        DELETE FROM res WHERE id = #{id}
+    </delete>
 
 </mapper>

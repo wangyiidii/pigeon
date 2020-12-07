@@ -11,9 +11,9 @@ public interface IJobService {
 
     JobDTO queryJobById(Integer id);
 
-    List<JobDTO> queryALlJobByUid(Integer uid);
+    List<JobDTO> queryAllJobByUid(Integer uid);
 
-    List<JobDTO> queryALlJob();
+    List<JobDTO> queryAllJob();
 
     void updateJob(JobDTO job);
 

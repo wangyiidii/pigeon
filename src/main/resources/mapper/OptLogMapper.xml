@@ -3,11 +3,13 @@
 <mapper namespace="cn.yiidii.pigeon.optlog.mapper.OptLogMapper">
 
     <select id="queryLogWithoutUid" resultType="cn.yiidii.pigeon.optlog.entity.OptLog">
-        SELECT id, uid, subject,ip,location_info locationInfo, `module`, content, create_time createTime FROM opt_log WHERE uid is null order by create_time desc
+        SELECT id, uid, subject,ip,location_info locationInfo, `module`, content, create_time createTime FROM opt_log
+        WHERE uid is null order by create_time desc
     </select>
 
     <select id="queryLogByUid" resultType="cn.yiidii.pigeon.optlog.entity.OptLog">
-       SELECT id, uid, subject, ip,location_info locationInfo,  `module`, content, create_time createTime FROM opt_log WHERE uid =#{uid} order by create_time desc
+        SELECT id, uid, subject, ip,location_info locationInfo, `module`, content, create_time createTime FROM opt_log
+        WHERE uid =#{uid} order by create_time desc
     </select>
 
 

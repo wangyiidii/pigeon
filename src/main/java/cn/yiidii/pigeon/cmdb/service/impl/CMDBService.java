@@ -148,15 +148,16 @@ public class CMDBService implements ICMDBService {
     }
 
     private void handleResParams(List<Param> params, String name, String defName) {
-        Map<String, ParamDefine> paramDefMap = DefineProxy.getCODefineMap().get(defName).getParams();
+        Map<String, ParamDefine> paramDefMap = DefineProxy.getCoDefineMap().get(defName).getParams();
         boolean include = false;
         for (Map.Entry<String, ParamDefine> entry : paramDefMap.entrySet()) {
             String paramKey = entry.getKey();
-            for (Param param : params)
+            for (Param param : params) {
                 if (param.getKey().equals(paramKey) || "param.ip".equals(paramKey)) {
                     include = true;
                     break;
                 }
+            }
             if (include) {
                 continue;
             }

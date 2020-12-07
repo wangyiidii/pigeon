@@ -38,7 +38,7 @@ public class SSHCollector implements ICollector {
         }
         Res res = cmdbService.getResByIndicator(indicator.getName());
         IndicatorValue iv = null;
-        if (checkSSHInfo(res)) {
+        if (checkSshInfo(res)) {
             Map<String, String> params = cmdbService.getResParamsByName(res.getName());
             String username = params.get(SSH_USERNAME);
             String password = params.get(SSH_PASSWORD);
@@ -53,7 +53,7 @@ public class SSHCollector implements ICollector {
                 remoteScript = indicator.getDefName() + ".sh";
                 jSchExecutor.uploadFile(SCRIPT_DIR + File.separator + indicator.getDefName() + ".sh", remoteDir + "/" + remoteScript);
                 List<String> returnMsg = jSchExecutor.execCmd("sh " + remoteDir + "/" + remoteScript);
-                iv = handleSSHReturnMsg(returnMsg, indicator);
+                iv = handleSshReturnMsg(returnMsg, indicator);
             } catch (Exception e) {
                 log.error("SSHCOll {} e: {}", indicator.getName(), e.toString());
                 iv = new IndicatorValue();
@@ -76,7 +76,7 @@ public class SSHCollector implements ICollector {
         return iv;
     }
 
-    protected boolean checkSSHInfo(Res res) {
+    protected boolean checkSshInfo(Res res) {
         Map<String, String> params = cmdbService.getResParamsByName(res.getName());
         if (params.containsKey(SSH_USERNAME) && params.containsKey(SSH_PASSWORD) && params.containsKey(SSH_PORT)) {
             return true;
@@ -84,7 +84,7 @@ public class SSHCollector implements ICollector {
         return false;
     }
 
-    protected IndicatorValue handleSSHReturnMsg(List<String> retrunMsg, Indicator indicator) {
+    protected IndicatorValue handleSshReturnMsg(List<String> retrunMsg, Indicator indicator) {
         if (retrunMsg.size() <= 0) {
             return null;
         }
@@ -101,12 +101,12 @@ public class SSHCollector implements ICollector {
             iv.setFailureResult("parse returnMsg error");
             iv.addValue("statusDesc", iv.getStatusDesc());
         } else {
-            Map<String, MetricDefine> ms = DefineProxy.getCODefineMetric(indicator.getDefName());
+            Map<String, MetricDefine> ms = DefineProxy.getCoDefineMetric(indicator.getDefName());
             for (int i = 0; i < retrunMsg.size(); i++) {
                 String[] kv = retrunMsg.get(i).split("=");
                 String key = kv[0];
                 String val = kv[1];
-                if (ms.containsKey(key) || key.equals("statusDesc")) {
+                if (ms.containsKey(key) || "statusDesc".equals(key)) {
                     iv.addValue(key, val);
                 }
             }

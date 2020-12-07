@@ -1,5 +1,9 @@
 package cn.yiidii.pigeon.base;
 
+/**
+ * @author yiidii Wang
+ * @desc This class is used to ...
+ */
 public class RabbitConstant {
     /**
      * 邮件队列

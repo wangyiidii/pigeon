@@ -243,7 +243,7 @@ public class JSchExecutor {
      * @return
      */
     public boolean changeDir(String pathName) {
-        if (pathName == null || pathName.trim().equals("")) {
+        if (pathName == null || "".equals(pathName.trim())) {
             log.debug("invalid pathName");
             return false;
         }
@@ -267,10 +267,10 @@ public class JSchExecutor {
                 sftp.cd(createpath);
                 return;
             }
-            String pathArry[] = createpath.split("/");
+            String[] pathArry = createpath.split("/");
             StringBuffer filePath = new StringBuffer("/");
             for (String path : pathArry) {
-                if (path.equals("")) {
+                if ("".equals(path)) {
                     continue;
                 }
                 filePath.append(path + "/");
@@ -299,11 +299,11 @@ public class JSchExecutor {
     public boolean isDirExist(String directory) {
         boolean isDirExistFlag = false;
         try {
-            SftpATTRS sftpATTRS = sftp.lstat(directory);
+            SftpATTRS sftpAttrS = sftp.lstat(directory);
             isDirExistFlag = true;
-            return sftpATTRS.isDir();
+            return sftpAttrS.isDir();
         } catch (Exception e) {
-            if (e.getMessage().toLowerCase().equals("no such file")) {
+            if ("no such file".equals(e.getMessage().toLowerCase())) {
                 isDirExistFlag = false;
             }
         }
@@ -327,12 +327,12 @@ public class JSchExecutor {
             if (checkAck(in) != 0) {
                 return -1;
             }
-            File _lfile = new File(source);
+            File sourceFile = new File(source);
             if (ptimestamp) {
-                command = "T " + (_lfile.lastModified() / 1000) + " 0";
+                command = "T " + (sourceFile.lastModified() / 1000) + " 0";
                 // The access time should be sent here,
                 // but it is not accessible with JavaAPI ;-<
-                command += (" " + (_lfile.lastModified() / 1000) + " 0\n");
+                command += (" " + (sourceFile.lastModified() / 1000) + " 0\n");
                 out.write(command.getBytes());
                 out.flush();
                 if (checkAck(in) != 0) {
@@ -340,7 +340,7 @@ public class JSchExecutor {
                 }
             }
             //send "C0644 filesize filename", where filename should not include '/'
-            long fileSize = _lfile.length();
+            long fileSize = sourceFile.length();
             command = "C0644 " + fileSize + " ";
             if (source.lastIndexOf('/') > 0) {
                 command += source.substring(source.lastIndexOf('/') + 1);
@@ -478,8 +478,12 @@ public class JSchExecutor {
         //          1 for error,
         //          2 for fatal error,
         //          -1
-        if (b == 0) return b;
-        if (b == -1) return b;
+        if (b == 0) {
+            return b;
+        }
+        if (b == -1) {
+            return b;
+        }
         if (b == 1 || b == 2) {
             StringBuffer sb = new StringBuffer();
             int c;

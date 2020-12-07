@@ -3,14 +3,19 @@
 <mapper namespace="cn.yiidii.pigeon.cmdb.mapper.IndicatorMapper">
 
     <select id="getIndicatorsByResName" resultType="cn.yiidii.pigeon.cmdb.entity.Indicator">
-        SELECT i.id,i.desc,i.name,i.def_name defName,i.state, i.alias,i.interval,i.method,i.timeout,i.retry_times retryTimes,i.create_time createTime,i.update_time updateTime,i.last_collect_time lastCollectTime  FROM indicator i,res r,res_ind ri
-         WHERE r.name=#{name} AND ri.res_name = r.name AND ri.ind_name =i.name  ORDER BY i.create_time;
+        SELECT i.id,i.desc,i.name,i.def_name defName,i.state, i.alias,i.interval,i.method,i.timeout,i.retry_times
+        retryTimes,i.create_time createTime,i.update_time updateTime,i.last_collect_time lastCollectTime FROM indicator
+        i,res r,res_ind ri
+        WHERE r.name=#{name} AND ri.res_name = r.name AND ri.ind_name =i.name ORDER BY i.create_time;
     </select>
 
     <select id="getIndicatorsWillBeCollect" resultType="cn.yiidii.pigeon.cmdb.entity.Indicator">
-        SELECT i.id,i.desc,i.name,i.def_name defName,i.state, i.alias,i.interval,i.method,i.timeout,i.retry_times retryTimes,i.create_time createTime,i.update_time updateTime,i.last_collect_time lastCollectTime FROM indicator i
-         where unix_timestamp(now())-unix_timestamp(IFNULL(i.last_collect_time,date_add(now(),INTERVAL -1 DAY))) > i.interval
-         and state = 0;
+        SELECT i.id,i.desc,i.name,i.def_name defName,i.state, i.alias,i.interval,i.method,i.timeout,i.retry_times
+        retryTimes,i.create_time createTime,i.update_time updateTime,i.last_collect_time lastCollectTime FROM indicator
+        i
+        where unix_timestamp(now())-unix_timestamp(IFNULL(i.last_collect_time,date_add(now(),INTERVAL -1 DAY))) >
+        i.interval
+        and state = 0;
     </select>
 
     <insert id="addIndicator" parameterType="cn.yiidii.pigeon.cmdb.entity.Indicator" useGeneratedKeys="true"
@@ -93,7 +98,7 @@
     </update>
 
     <delete id="delIndicatorByName">
-        		DELETE FROM indicator WHERE name = #{name}
+        DELETE FROM indicator WHERE name = #{name}
     </delete>
 
 </mapper>

@@ -47,6 +47,9 @@ spring:
     username: admin
     password: admin
     virtual-host: /
+#  grpc:
+#    enable: true
+#    port: 6565
 
 
 mybatis:
@@ -68,3 +71,7 @@ influx:
   openurl: http://127.0.0.1:8086
   database: pigeon
   retentionPolicy: autogen
+
+#grpc相关配置
+grpc:
+  port: 9090

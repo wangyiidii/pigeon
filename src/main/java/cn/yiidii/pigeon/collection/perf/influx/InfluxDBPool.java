@@ -25,9 +25,10 @@ public class InfluxDBPool extends GenericObjectPool<InfluxDBConnection> {
         InfluxDBConnectionFactory factory = new InfluxDBConnectionFactory();
         //设置对象池的相关参数
         GenericObjectPoolConfig poolConfig = new GenericObjectPoolConfig();
-        poolConfig.setMaxIdle(5);
         poolConfig.setMaxTotal(10);
-        poolConfig.setMinIdle(2);
+        poolConfig.setMaxIdle(5);
+        poolConfig.setMinIdle(3);
+        poolConfig.setMaxWaitMillis(10 * 1000);
         poolConfig.setTestOnBorrow(true);
         poolConfig.setTestOnReturn(true);
 

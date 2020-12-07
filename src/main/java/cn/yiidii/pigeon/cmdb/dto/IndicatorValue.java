@@ -29,6 +29,7 @@ public class IndicatorValue {
     }
 
     public void setFailureResult(String statusDesc) {
+        this.values.clear();
         this.values.put("statusDesc", statusDesc);
         this.values.put("private.result", "1");
     }
@@ -49,10 +50,12 @@ public class IndicatorValue {
         this.values = paramMap;
     }
 
+    @Override
     public String toString() {
         String str = "";
-        for (Map.Entry<String, Object> entry : this.values.entrySet())
+        for (Map.Entry<String, Object> entry : this.values.entrySet()) {
             str = str + "<" + (String) entry.getKey() + "," + (String) entry.getValue() + ">";
+        }
         return str;
     }
 

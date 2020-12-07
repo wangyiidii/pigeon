@@ -11,7 +11,7 @@ public class DefineProxy {
     private static Map<String, CODefine> coDefineMap = new ConcurrentHashMap<>();
     private static Map<String, IndicatorDefine> indDefineMap = new ConcurrentHashMap<>();
 
-    public static Map<String, CODefine> getCODefineMap() {
+    public static Map<String, CODefine> getCoDefineMap() {
         return coDefineMap;
     }
 
@@ -19,7 +19,7 @@ public class DefineProxy {
         return indDefineMap;
     }
 
-    protected static void setCODefineMap(Map map) {
+    protected static void setCoDefineMap(Map map) {
         coDefineMap = map;
     }
 
@@ -27,7 +27,7 @@ public class DefineProxy {
         indDefineMap = map;
     }
 
-    public static Map<String, CODefine> getCODefineByExtend(String extend) {
+    public static Map<String, CODefine> getCoDefineByExtend(String extend) {
         Map<String, CODefine> result = new HashMap<>();
         extend = StringUtils.isBlank(extend) ? COConstant.CO_ROOT : extend;
         for (CODefine coDefine : coDefineMap.values()) {
@@ -39,7 +39,7 @@ public class DefineProxy {
         return result;
     }
 
-    public static CODefine getCODefineByName(String coDefName) {
+    public static CODefine getCoDefineByName(String coDefName) {
         return coDefineMap.get(coDefName);
     }
 
@@ -47,7 +47,7 @@ public class DefineProxy {
         return indDefineMap.get(indDefname);
     }
 
-    public static Map<String, MetricDefine> getCODefineMetric(String indDefineName) {
+    public static Map<String, MetricDefine> getCoDefineMetric(String indDefineName) {
         IndicatorDefine define = indDefineMap.get(indDefineName);
         if (Objects.isNull(define)) {
             return null;

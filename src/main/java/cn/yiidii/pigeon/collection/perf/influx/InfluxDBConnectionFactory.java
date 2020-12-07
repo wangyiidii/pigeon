@@ -17,6 +17,7 @@ public class InfluxDBConnectionFactory implements PooledObjectFactory<InfluxDBCo
     @Override
     public PooledObject<InfluxDBConnection> makeObject() throws Exception {
         InfluxDBConnection conn = SpringContextUtil.getBean(InfluxDBConnection.class);
+        conn.influxDbBuild();
         return new DefaultPooledObject<>(conn);
     }
 

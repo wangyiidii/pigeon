@@ -44,9 +44,9 @@ public class GlobalResponseBodyAdvice implements ResponseBodyAdvice {
         if (obj instanceof Result || obj instanceof Byte) {
             return obj;
         }
-        if (obj instanceof PageResult) {
-            return PageUtil.parsePageResult(((PageResult) obj));
-        }
+        //        if (obj instanceof PageResult) {
+        //            return PageUtil.parsePageResult(((PageResult) obj));
+        //        }
 
         return getWrapperResponse(request, obj);
     }

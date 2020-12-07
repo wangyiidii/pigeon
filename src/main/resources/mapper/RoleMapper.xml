@@ -7,7 +7,8 @@
     </select>
 
     <select id="queryRoleByUserName" resultType="cn.yiidii.pigeon.shiro.entity.Role">
-        SELECT r.id, r.name, r.desc FROM t_user u, t_role r, t_user_role ur WHERE u.username = #{username} AND u.id = ur.uid AND r.id = ur.rid;
+        SELECT r.id, r.name, r.desc FROM t_user u, t_role r, t_user_role ur WHERE u.username = #{username} AND u.id =
+        ur.uid AND r.id = ur.rid;
     </select>
 
     <select id="queryRoleByRoleName" resultType="cn.yiidii.pigeon.shiro.entity.Role">
@@ -62,7 +63,7 @@
 
     <!-- 删除用户 -->
     <delete id="del">
-		DELETE FROM t_role WHERE id = #{id}
-	</delete>
+        DELETE FROM t_role WHERE id = #{id}
+    </delete>
 
 </mapper>

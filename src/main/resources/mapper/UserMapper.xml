@@ -8,7 +8,8 @@
     </select>
 
     <select id="queryUserByUsername" resultType="cn.yiidii.pigeon.shiro.entity.User">
-        SELECT id,username,password,`name`,email,phone,salt,email_code emailCode,`state` FROM t_user where username= #{username}
+        SELECT id,username,password,`name`,email,phone,salt,email_code emailCode,`state` FROM t_user where username=
+        #{username}
     </select>
 
     <select id="queryUserById" resultType="cn.yiidii.pigeon.shiro.entity.User">
@@ -114,7 +115,7 @@
 
     <!-- 删除用户 -->
     <delete id="del">
-		DELETE FROM t_user WHERE id = #{id}
-	</delete>
+        DELETE FROM t_user WHERE id = #{id}
+    </delete>
 
 </mapper>

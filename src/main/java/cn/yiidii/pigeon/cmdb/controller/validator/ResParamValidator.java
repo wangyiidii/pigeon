@@ -15,7 +15,7 @@ public class ResParamValidator implements ConstraintValidator<ResParamsCheck, Re
 
     @Override
     public boolean isValid(ResInsertForm resInsertForm, ConstraintValidatorContext context) {
-        CODefine coDefine = DefineProxy.getCODefineMap().get(resInsertForm.getDefName());
+        CODefine coDefine = DefineProxy.getCoDefineMap().get(resInsertForm.getDefName());
         if (Objects.isNull(coDefine)) {
             packContext(context, "不支持的资源类型");
             return false;

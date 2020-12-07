@@ -62,12 +62,12 @@ public class IPUtil {
         return ipAddress;
     }
 
-    public static String getUA(HttpServletRequest request) {
+    public static String getUa(HttpServletRequest request) {
         String ua = request.getHeader("User-Agent");
         return ua.length() > 0 ? ua : "UNKNOW UA";
     }
 
-    public static String getLocationByIP(String ip) {
+    public static String getLocationByIp(String ip) {
         String location = "UNKNOWN";
         try {
             String url = "http://whois.pconline.com.cn/ipJson.jsp?callback=testJson&ip=" + ip;
@@ -89,6 +89,6 @@ public class IPUtil {
     }
 
     public static void main(String[] args) {
-        System.out.println(getLocationByIP("39.144.16.26"));
+        System.out.println(getLocationByIp("39.144.16.26"));
     }
 }

@@ -25,7 +25,7 @@ public class GlobalExceptionAdvice {
      * 处理请求参数格式错误 @RequestBody上 validate
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Result MethodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
+    public Result methodArgumentNotValidExceptionHandler(MethodArgumentNotValidException e) {
         String message = e.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(","));
         return Result.error(ResultCodeEnum.ILLEGAL_ARGUMENT_ERROR, message);
     }
@@ -35,7 +35,7 @@ public class GlobalExceptionAdvice {
      */
     @ExceptionHandler(ConstraintViolationException.class)
     @ResponseBody
-    public Result ConstraintViolationExceptionHandler(ConstraintViolationException e) {
+    public Result constraintViolationExceptionHandler(ConstraintViolationException e) {
         String message = e.getConstraintViolations().stream().map(ConstraintViolation::getMessage).collect(Collectors.joining(","));
         return Result.error(ResultCodeEnum.ILLEGAL_ARGUMENT_ERROR, message);
     }
@@ -45,7 +45,7 @@ public class GlobalExceptionAdvice {
      */
     @ExceptionHandler(BindException.class)
     @ResponseBody
-    public Result<Object> BindExceptionHandler(BindException e) {
+    public Result<Object> bindExceptionHandler(BindException e) {
         String message = e.getBindingResult().getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).collect(Collectors.joining(","));
         return Result.error(ResultCodeEnum.ILLEGAL_ARGUMENT_ERROR, message);
     }

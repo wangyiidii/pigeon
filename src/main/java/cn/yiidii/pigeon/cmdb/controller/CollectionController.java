@@ -12,6 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class CollectionController {
     @GetMapping("/collStatus")
     public Object collStatus() {
-        return CollectionExecutor.getTimerCollectExecutorStatus();
+        return "CollectionExecutor.getTimerCollectExecutorStatus()";
     }
 }
