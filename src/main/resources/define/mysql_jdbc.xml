@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<defines>
+    <define name="MySQL" extend="DataBase" alias="MySQL">
+        <param name="param.port" alias="" defaultValue="3306" type="text" required="0"/>
+        <param name="param.username" alias="" defaultValue="root" type="text" required="1"/>
+        <param name="param.password" alias="" defaultValue="" type="text" required="1"/>
+    </define>
+
+    <ind name="MysqlConnectionJDBCIndicator" alias="MysqlConnection" extend="IndicatorRoot" ref="MySQL" method="JDBC"
+         collector="cn.yiidii.pigeon.collection.collector.database.mysql.MysqlConnectionJDBCIndicator">
+        <metric name="ConnectionNum" alias="ConnectionNum" unit="piece"/>
+        <metric name="AbortedConnectionNum" alias="AbortedConnectionNum" unit="piece"/>
+    </ind>
+</defines>
