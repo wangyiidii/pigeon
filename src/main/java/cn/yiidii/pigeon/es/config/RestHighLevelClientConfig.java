@@ -13,8 +13,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
 
-@Configuration
-@PropertySource("classpath:es-config.properties")
+//@Configuration
+//@PropertySource("classpath:es-config.properties")
 public class RestHighLevelClientConfig {
 
     @Value("${es.host}")

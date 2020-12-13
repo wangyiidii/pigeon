@@ -26,7 +26,7 @@ import java.io.IOException;
  * @author yiidii Wang
  * @desc es常用操作
  */
-@Service
+//@Service
 @Slf4j
 public class RestHighLevelClientService implements IRestHighLevelClientService {
 
